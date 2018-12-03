@@ -1,0 +1,4 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mHelloSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mThe Hello object[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- should say hello *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  "hello[]" did not equal "hello[!]" (HelloSpec.scala:7)[0m[0m
