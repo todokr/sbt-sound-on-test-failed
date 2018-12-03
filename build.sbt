@@ -1,4 +1,6 @@
 import Dependencies._
+import javax.sound.sampled.{AudioSystem, Clip, DataLine}
+import scala.Console._
 
 lazy val root = (project in file(".")).
   settings(
@@ -12,12 +14,21 @@ lazy val root = (project in file(".")).
     (test in Test) := {
       (test in Test).result.value match {
         case Inc(inc) =>
-          val res = (resourceDirectory in Test).value / "test.txt"
-          println(IO.read(res))
-          println("test failed!!!!!!!!!!!!!!!")
+          val ais = AudioSystem.getAudioInputStream((resourceDirectory in Test).value / "Glass.aiff")
+          val format = ais.getFormat
+          val dataLine = new DataLine.Info(classOf[Clip], format)
+          AudioSystem.getLine(dataLine) match {
+            case c: Clip =>
+              c.open(ais)
+              c.loop(0)
+              c.flush()
+              while(c.isActive) { Thread.sleep(100) }
+            case _ => println(RED + "Not a Clip" + RESET)
+          }
+          ais.close()
           throw inc
-        case Value(value) =>
-          value
+        case Value(value) => value
       }
     }
   )
+
